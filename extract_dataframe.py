@@ -89,7 +89,7 @@ class TweetDfExtractor:
     def find_favourite_count(self) -> list:
         favorites_count = []
         for tweets in self.tweets_list:
-            favorites_count.append(tweets['favorites_count'])
+            favorites_count.append(tweets['favorite_count'])
         return favorites_count
 
     def find_retweet_count(self) -> list:
