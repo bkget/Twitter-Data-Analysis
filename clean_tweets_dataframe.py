@@ -15,7 +15,7 @@ class Clean_Tweets:
         df.drop(unwanted_rows , inplace=True)
         df = df[df['polarity'] != 'polarity']
         
-        return df
+        return self.df
     def drop_duplicate(self, df:pd.DataFrame)->pd.DataFrame:
         """
         drop duplicate rows
