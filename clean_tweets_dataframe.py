@@ -1,3 +1,4 @@
+import pandas as pd
 class Clean_Tweets:
     """
     The PEP8 Standard AMAZING!!!
@@ -12,7 +13,7 @@ class Clean_Tweets:
         the data collection stage.  
         """
         unwanted_rows = df[df['retweet_count'] == 'retweet_count' ].index
-        df.drop(unwanted_rows , inplace=True)
+        df.drop(unwanted_rows, inplace=True)
         df = df[df['polarity'] != 'polarity']
 
         return self.df
