@@ -56,3 +56,17 @@ class Clean_Tweets:
         df = ----
         
         return df
+
+# Adding a main function which will call all other functions and do the task of data cleaning
+if __name__ == "__main__":
+    cleaned_df = pd.read_csv("processed_tweet_data.csv")
+    clean_tweets = CleanTweets(cleaned_df)
+    cleaned_df = clean_tweets.drop_duplicate(cleaned_df)
+    cleaned_df = clean_tweets.remove_non_english_tweets()
+    cleaned_df = clean_tweets.convert_to_datetime(cleaned_df)
+    cleaned_df = clean_tweets.drop_unwanted_column(cleaned_df)
+    cleaned_df = clean_tweets.convert_to_numbers()
+    print(cleaned_df['polarity'][0:5])
+    
+    cleaned_df.to_csv('clean_processed_tweet_data.csv')
+    print('File Successfully Saved.!!!') 
