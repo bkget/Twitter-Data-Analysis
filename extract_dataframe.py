@@ -50,6 +50,8 @@ class TweetDfExtractor:
        
     
     def find_sentiments(self, text)->list:
+        polarity = [TextBlob(x).polarity for x in text]
+        subjectivity = [TextBlob(x).subjectivity for x in text]
         
         return polarity, self.subjectivity
 
