@@ -81,11 +81,12 @@ class TweetDfExtractor:
         return friends_count
 
     def is_sensitive(self)->list:
-        try:
-            is_sensitive = [x['possibly_sensitive'] for x in self.tweets_list]
-        except KeyError:
-            is_sensitive = ''
-
+        is_sensitive = []
+        for tweet in self.tweets_list:
+            if 'possibly_sensitive' in tweet.keys():
+                is_sensitive.append(tweet['possibly_sensitive'])
+            else: is_sensitive.append(None)
+    
         return is_sensitive
 
     def find_favourite_count(self)->list:
@@ -117,11 +118,10 @@ class TweetDfExtractor:
         return mentions
 
     def find_location(self)->list:
-        try:
-            location = self.tweets_list['user']['location']
-        except TypeError:
-            location = ''
-        
+        location = []
+        for tweet in self.tweets_list:
+            location.append(tweet['user']['location'])
+             
         return location
 
     def find_lang(self)->list:
