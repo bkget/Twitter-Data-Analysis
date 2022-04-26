@@ -21,9 +21,9 @@ class Clean_Tweets:
     def drop_duplicate(self, df:pd.DataFrame)->pd.DataFrame:
         """
         drop duplicate rows
-        """
-        
-        ---
+        """        
+        non_duplicates = self.df.drop_duplicates(subset="original_text")
+        df = non_duplicates
         
         return df
     def convert_to_datetime(self, df:pd.DataFrame)->pd.DataFrame:
