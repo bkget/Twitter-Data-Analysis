@@ -49,7 +49,7 @@ class Clean_Tweets:
         self.df['favorite_count'] = pd.to_numeric(self.df['favorite_count'], errors='coerce')
         self.df["friends_count"] = pd.to_numeric(self.df["friends_count"], errors='coerce')
         self.df["followers_count"] = pd.to_numeric(self.df["followers_count"], errors='coerce')
-        
+
         return self.df
     
     def remove_non_english_tweets(self, df:pd.DataFrame)->pd.DataFrame:
@@ -57,9 +57,9 @@ class Clean_Tweets:
         remove non english tweets from lang
         """
         
-        df = ----
+        self.df = self.df.drop(self.df[self.df['lang'] != 'en'].index)
         
-        return df
+        return self.df
 
 # Adding a main function which will call all other functions and do the task of data cleaning
 if __name__ == "__main__":
