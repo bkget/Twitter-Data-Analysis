@@ -1,5 +1,5 @@
 import pandas as pd
-
+import os.path
 
 class Clean_Tweets:
     """
@@ -28,7 +28,7 @@ class Clean_Tweets:
 
         self.df = self.df.drop_duplicates().drop_duplicates(subset='original_text')
 
-        return df
+        return self.df
 
     def convert_to_datetime(self, df: pd.DataFrame) -> pd.DataFrame:
         """
@@ -62,6 +62,21 @@ class Clean_Tweets:
         return self.df
 
 
+#     def saves (self, df: pd.DataFrame) -> pd.DataFrame:
+#         save = True
+#         if save:
+#             df.to_csv(os.path.join('data', 'process_tweet_data.csv'), index=False)
+#             print('File Successfully Saved.!!!')
+
 if __name__ == "__main__":
-    tweet_df = pd.read_csv("../data/covid19.csv")
-    cleaner = CleanTweets(tweet_df)
+    tweet_dfs = pd.read_csv("data/processed_tweet_data.csv")
+    cleaner = Clean_Tweets(tweet_dfs)
+    tweet_dfs = cleaner.drop_unwanted_column(tweet_dfs)
+    tweet_dfs = cleaner.drop_duplicate(tweet_dfs)
+    tweet_dfs = cleaner.remove_non_english_tweets(tweet_dfs)
+    tweet_dfs = cleaner.convert_to_datetime(tweet_dfs)
+    tweet_dfs = cleaner.convert_to_numbers(tweet_dfs)
+    tweet_dfs.to_csv(os.path.join('data', 'clean_tweet_data.csv'), index=False)
+    print('File Successfully Saved.!!!')
+#     cleaner.to_csv(os.path.join('data', 'process_tweet_data.csv'), index=False)
+#     print('File Successfully Saved.!!!')
