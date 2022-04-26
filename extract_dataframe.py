@@ -1,6 +1,8 @@
 import json
 import pandas as pd
 from textblob import TextBlob
+import os.path
+
 
 def read_json(json_file: str)->list:
     """
@@ -150,7 +152,7 @@ class TweetDfExtractor:
         df = pd.DataFrame(datas, columns=columns)
         save = True
         if save:
-            df.to_csv('processed_tweet_data.csv', index=False)
+            df.to_csv(os.path.join('data', 'processed_tweet_data.csv'), index=False)
             print('File Successfully Saved.!!!')
 
         return df

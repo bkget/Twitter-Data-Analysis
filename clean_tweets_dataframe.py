@@ -60,3 +60,8 @@ class Clean_Tweets:
         self.df = self.df.query("lang == 'en'")
 
         return self.df
+
+
+if __name__ == "__main__":
+    tweet_df = pd.read_csv("../data/covid19.csv")
+    cleaner = CleanTweets(tweet_df)
