@@ -68,7 +68,7 @@ class TestTweetDfExtractor(unittest.TestCase):
         self.assertEqual(self.df.is_sensitive(), [None, None, None, None, None])
 
     def test_find_favourite_count(self):
-        self.assertEqual(self.df.find_favourite_count(), [548, 195, 2, 1580, 72])
+        self.assertEqual(self.df.find_favourite_count(), [2356, 1985, 16, 1242, 1329])
 
     def test_find_retweet_count(self):
         self.assertEqual(self.df.find_retweet_count(), [612, 92, 1, 899, 20])
