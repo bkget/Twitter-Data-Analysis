@@ -41,13 +41,13 @@ class TweetDfExtractor:
         
     def find_full_text(self)->list:
         text = []
-        for tweet in self.tweets_list:
-            if 'retweeted_status' in tweet.keys() and 'extended_tweet' in tweet['retweeted_status'].keys():
-                text.append(tweet['retweeted_status']['extended_tweet']['full_text'])
-            else: text.append('Empty')
+        for x in self.tweets_list:
+            try:
+                text.append(x['retweeted_status']['extended_tweet']['full_text'])
+            except KeyError:
+                text.append(x['text'])
 
-        return text
-       
+        return text       
     
     def find_sentiments(self, text)->list:
         polarity = [TextBlob(x).polarity for x in text]
