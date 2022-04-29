@@ -22,13 +22,12 @@ class Clean_Tweets:
         return self.df
 
     def clean_text(self, df: pd.DataFrame):
+        df['original_text'] = df['original_text'].apply(lambda x: re.split('https:\/\/.*', str(x))[0])
         df['original_text'] = df['original_text'].str.replace('RT', '')
         df['original_text'] = df['original_text'].str.split(':').str[1]
-        df['original_text'] = df['original_text'].astype(str)
+        df['original_text']=df['original_text'].astype(str)
         df['original_text'] = df['original_text'].apply(lambda x: x.lower())
-        df['original_text'] = df['original_text'].apply(
-            lambda x: x.translate(str.maketrans(' ', ' ', string.punctuation)))
-
+        df['original_text']= df['original_text'].apply(lambda x: x.translate(str.maketrans(' ', ' ', string.punctuation)))
         return self.df
 
     def drop_duplicate(self, df: pd.DataFrame) -> pd.DataFrame:

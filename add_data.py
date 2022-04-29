@@ -207,10 +207,10 @@ def db_execute_fetch(*args, many=False, tablename='', rdf=True, **kwargs) -> pd.
 
 
 if __name__ == "__main__":
-    createDB(dbName='twitter_schema')
-    emojiDB(dbName='twitter_schema')
-    createTables(dbName='twitter_schema')
+    createDB(dbName='twitter_data')
+    emojiDB(dbName='twitter_data')
+    createTables(dbName='twitter_data')
 
-    df = pd.read_csv('data/clean_tweets_data.csv')
+    df = pd.read_csv('data/new_twitter_data.csv')
 
-    insert_to_tweet_table(dbName='twitter_schema', df=df, table_name='EconomicTweets')
+    insert_to_tweet_table(dbName='twitter_data', df=df, table_name='EconomicTweets')
