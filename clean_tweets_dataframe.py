@@ -21,6 +21,16 @@ class Clean_Tweets:
 
         return self.df
 
+    def clean_text(self, df: pd.DataFrame):
+        df['original_text'] = df['original_text'].str.replace('RT', '')
+        df['original_text'] = df['original_text'].str.split(':').str[1]
+        df['original_text'] = df['original_text'].astype(str)
+        df['original_text'] = df['original_text'].apply(lambda x: x.lower())
+        df['original_text'] = df['original_text'].apply(
+            lambda x: x.translate(str.maketrans(' ', ' ', string.punctuation)))
+
+        return self.df
+
     def drop_duplicate(self, df: pd.DataFrame) -> pd.DataFrame:
         """
         drop duplicate rows
@@ -69,13 +79,14 @@ class Clean_Tweets:
 #             print('File Successfully Saved.!!!')
 
 if __name__ == "__main__":
-    tweet_dfs = pd.read_csv("data/processed_tweet_data.csv")
+    tweet_dfs = pd.read_csv("data/processed_tweets_data.csv")
     cleaner = Clean_Tweets(tweet_dfs)
     tweet_dfs = cleaner.drop_unwanted_column(tweet_dfs)
     tweet_dfs = cleaner.drop_duplicate(tweet_dfs)
     tweet_dfs = cleaner.remove_non_english_tweets(tweet_dfs)
     tweet_dfs = cleaner.convert_to_datetime(tweet_dfs)
     tweet_dfs = cleaner.convert_to_numbers(tweet_dfs)
+    tweet_dfs = cleaner.clean_text(tweet_dfs)
     tweet_dfs.to_csv(os.path.join('data', 'clean_tweet_data.csv'), index=False)
     print('File Successfully Saved.!!!')
 #     cleaner.to_csv(os.path.join('data', 'process_tweet_data.csv'), index=False)
