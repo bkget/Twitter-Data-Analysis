@@ -91,7 +91,7 @@ class Clean_Tweets:
         english_stopwords = stopwords.words('english')
         user_stop_words = ['2022', '2', 'rt', 'much', 'next', 'cant', 'wont', 'hadnt',
                     'havent', 'hasnt', 'isnt', 'shouldnt', 'couldnt', 'wasnt', 'werent',
-                    'mustnt', '’', '...', '..', '.', '.....', '....', 'been…', 'one', 'two',
+                    'mustnt', 'amp', '10', '100', 'pm', '’', '...', '..', '.', '.....', '....', 'been…', 'one', 'two',
                     'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'aht',
                     've']
         stop = english_stopwords + user_stop_words
