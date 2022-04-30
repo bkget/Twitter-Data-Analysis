@@ -81,7 +81,10 @@ class Clean_Tweets:
         # Remove Emojis
         self.df['original_text'] = self.df['original_text'].astype(str).apply(lambda x: x.encode('latin-1', 'ignore').decode('latin-1'))
         
-        
+        # Remove URLs
+        self.df['original_text'] = self.df['original_text'].str.replace('http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', ' ')
+
+         
         return self.df
 
 # Adding a main function which will call all other functions and do the task of data cleaning
