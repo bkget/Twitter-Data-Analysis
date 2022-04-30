@@ -78,6 +78,9 @@ class Clean_Tweets:
         # Remove words staring with @ symbol
         self.df['original_text'] = self.df['original_text'].str.replace('(@\w+.*?)',"") 
        
+        # Remove Emojis
+        self.df['original_text'] = self.df['original_text'].astype(str).apply(lambda x: x.encode('latin-1', 'ignore').decode('latin-1'))
+        
         
         return self.df
 
