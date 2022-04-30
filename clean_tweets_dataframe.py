@@ -68,6 +68,7 @@ class Clean_Tweets:
         """
         remove stopwords from orinal tweets
         """
+        import numpy as np
         import string
         from nltk.corpus import stopwords
         from cleantext import clean  
@@ -97,6 +98,9 @@ class Clean_Tweets:
         stop = english_stopwords + user_stop_words
 
         self.df['original_text'] = self.df['original_text'].apply(lambda x: ' '.join([word for word in x.split() if word not in (stop)]))
+
+        # Drop empty tweets after preprocessing
+        self.df.drop(self.df[self.df['original_text'] == ''].index, inplace = True)
 
         return self.df
 
