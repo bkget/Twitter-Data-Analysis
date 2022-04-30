@@ -84,7 +84,10 @@ class Clean_Tweets:
         # Remove URLs
         self.df['original_text'] = self.df['original_text'].str.replace('http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', ' ')
 
-         
+        # Remove punctuations from a tweet
+        self.df['original_text'] = self.df['original_text'].apply(lambda x:''.join([i for i in x if i not in string.punctuation]))        
+
+        
         return self.df
 
 # Adding a main function which will call all other functions and do the task of data cleaning
