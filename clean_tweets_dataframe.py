@@ -87,7 +87,17 @@ class Clean_Tweets:
         # Remove punctuations from a tweet
         self.df['original_text'] = self.df['original_text'].apply(lambda x:''.join([i for i in x if i not in string.punctuation]))        
 
-        
+        # Remove stopwords from a tweet
+        english_stopwords = stopwords.words('english')
+        user_stop_words = ['2022', '2', 'rt', 'much', 'next', 'cant', 'wont', 'hadnt',
+                    'havent', 'hasnt', 'isnt', 'shouldnt', 'couldnt', 'wasnt', 'werent',
+                    'mustnt', '’', '...', '..', '.', '.....', '....', 'been…', 'one', 'two',
+                    'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'aht',
+                    've']
+        stop = english_stopwords + user_stop_words
+
+        self.df['original_text'] = self.df['original_text'].apply(lambda x: ' '.join([word for word in x.split() if word not in (stop)]))
+
         return self.df
 
 # Adding a main function which will call all other functions and do the task of data cleaning
