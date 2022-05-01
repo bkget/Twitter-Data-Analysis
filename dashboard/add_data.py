@@ -216,3 +216,4 @@ if __name__ == "__main__":
     df = pd.read_csv('../clean_processed_tweet_data.csv')
 
     insert_to_tweet_table(dbName='tweets', df=df, table_name='TweetInformation')
+    print("Data Insertion completed!")
