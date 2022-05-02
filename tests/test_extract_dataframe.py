@@ -3,7 +3,7 @@ import pandas as pd
 import sys, os
 import zipfile
  
-sys.path.append(os.path.abspath(os.path.join('../..')))
+sys.path.append(os.path.abspath(os.path.join('..')))
 
 from extract_dataframe import read_json
 from extract_dataframe import TweetDfExtractor
