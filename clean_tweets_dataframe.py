@@ -1,4 +1,7 @@
+from nltk.corpus import stopwords, words # get stopwords from NLTK library & get all words in english language
+from nltk.tokenize import word_tokenize
 import pandas as pd
+import re
 
 class Clean_Tweets:
     """
@@ -60,6 +63,46 @@ class Clean_Tweets:
         self.df = self.df.drop(self.df[self.df['lang'] != 'en'].index)
         
         return self.df
+    
+    def tweet_preprocessing(self, df:pd.DataFrame)->pd.DataFrame:
+        """
+        remove stopwords from orinal tweets
+        """
+        import numpy as np
+        import string
+        from nltk.corpus import stopwords
+        from cleantext import clean  
+        
+        # Change tweet texts to lowercase
+        self.df['original_text'] = self.df['original_text'].str.lower()  
+
+        # Remove words staring with @ symbol
+        self.df['original_text'] = self.df['original_text'].str.replace('(@\w+.*?)',"") 
+       
+        # Remove Emojis
+        self.df['original_text'] = self.df['original_text'].astype(str).apply(lambda x: x.encode('latin-1', 'ignore').decode('latin-1'))
+        
+        # Remove URLs
+        self.df['original_text'] = self.df['original_text'].str.replace('http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', ' ')
+
+        # Remove punctuations from a tweet
+        self.df['original_text'] = self.df['original_text'].apply(lambda x:''.join([i for i in x if i not in string.punctuation]))        
+
+        # Remove stopwords from a tweet
+        english_stopwords = stopwords.words('english')
+        user_stop_words = ['2022', '2', 'rt', 'much', 'next', 'cant', 'wont', 'hadnt',
+                    'havent', 'hasnt', 'isnt', 'shouldnt', 'couldnt', 'wasnt', 'werent',
+                    'mustnt', 'amp', '10', '100', 'pm', '’', '...', '..', '.', '.....', '....', 'been…', 'one', 'two',
+                    'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'aht',
+                    've']
+        stop = english_stopwords + user_stop_words
+
+        self.df['original_text'] = self.df['original_text'].apply(lambda x: ' '.join([word for word in x.split() if word not in (stop)]))
+
+        # Drop empty tweets after preprocessing
+        self.df.drop(self.df[self.df['original_text'] == ''].index, inplace = True)
+
+        return self.df
 
 # Adding a main function which will call all other functions and do the task of data cleaning
 if __name__ == "__main__":
@@ -70,6 +113,8 @@ if __name__ == "__main__":
     cleaned_df = clean_tweets.convert_to_datetime(cleaned_df)
     cleaned_df = clean_tweets.drop_unwanted_column(cleaned_df)
     cleaned_df = clean_tweets.convert_to_numbers(cleaned_df)
+    cleaned_df = clean_tweets.tweet_preprocessing(cleaned_df)
+
     print(cleaned_df['polarity'][0:5])
     
     cleaned_df.to_csv('clean_processed_tweet_data.csv')
