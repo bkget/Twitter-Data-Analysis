@@ -10,7 +10,7 @@ from extract_dataframe import TweetDfExtractor
 
 # Unzipping the data for reading
 with zipfile.ZipFile("data/Economic_Twitter_Data.zip", "r") as unzipping:
-    unzipping.extractall("data/")
+	unzipping.extractall("data/")
 
 _, tweet_list = read_json("data/Economic_Twitter_Data.json")
 
@@ -29,8 +29,6 @@ class TestTweetDfExtractor(unittest.TestCase):
 
     def setUp(self) -> pd.DataFrame:
         self.df = TweetDfExtractor(tweet_list[:5])
-        # tweet_df = self.df.get_tweet_df()         
-
 
     def test_find_statuses_count(self):
         self.assertEqual(self.df.find_statuses_count(), [40, 40, 40, 40, 40])
