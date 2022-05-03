@@ -2,6 +2,7 @@ import os
 import pandas as pd
 import mysql.connector as mysql
 from mysql.connector import Error
+import streamlit as st
 
 def DBConnect(dbName=None):
     """
@@ -15,8 +16,7 @@ def DBConnect(dbName=None):
     -------
 
     """
-    conn = mysql.connect(host='localhost', user='root', password='Timileyin52!',
-                         database=dbName, buffered=True)
+    conn = mysql.connect(**st.secrets["mysql"])
     cur = conn.cursor()
     return conn, cur
 
@@ -211,6 +211,6 @@ if __name__ == "__main__":
     emojiDB(dbName='twitter_data')
     createTables(dbName='twitter_data')
 
-    df = pd.read_csv('data/new_twitter_data.csv')
+    df = pd.read_csv('data/clean_tweets_data.csv')
 
     insert_to_tweet_table(dbName='twitter_data', df=df, table_name='EconomicTweets')
