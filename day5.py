@@ -5,28 +5,30 @@ import altair as alt
 from wordcloud import WordCloud
 import plotly.express as px
 from add_data import db_execute_fetch
+import streamlit as st
+import mysql.connector
 
 st.set_page_config(page_title="Day 5", layout="wide")
 
-def loadData():
-    query = "select * from Economictweets"
-    df = db_execute_fetch(query, dbName="tweets_data", rdf=True)
-    return df
-
-# def init_connection():
-#     return mysql.connector.connect(**st.secrets["mysql"])
-#
-# conn = init_connection()
-#
-# def run_query(query):
-#     with conn.cursor() as cur:
-#         cur.execute(query)
-#         return cur.fetchall()
-#
 # def loadData():
-#     df = run_query("SELECT * from Economictweets;")
-#     #df = db_execute_fetch(query, dbName="tweets_data", rdf=True)
+#     query = "select * from Economictweets"
+#     df = db_execute_fetch(query, dbName="tweets_data", rdf=True)
 #     return df
+
+def init_connection():
+    return mysql.connector.connect(**st.secrets["mysql"])
+
+conn = init_connection()
+
+def run_query(query):
+    with conn.cursor() as cur:
+        cur.execute(query)
+        return cur.fetchall()
+
+def loadData():
+    df = run_query("SELECT * from Economictweets;")
+    #df = db_execute_fetch(query, dbName="tweets_data", rdf=True)
+    return df
 
 
 def selectHashTag():
